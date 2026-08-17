@@ -1,12 +1,12 @@
 <p align="center">
 	<img alt="logo" src="https://oscimg.oschina.net/oscnet/up-d3d0a9303e11d522a06cd263f3079027715.png">
 </p>
-<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">RuoYi v3.9.2</h1>
+<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">PanJia v3.9.2</h1>
 <h4 align="center">基于SpringBoot+Vue前后端分离的Java快速开发框架</h4>
 <p align="center">
-	<a href="https://gitee.com/y_project/RuoYi-Vue/stargazers"><img src="https://gitee.com/y_project/RuoYi-Vue/badge/star.svg?theme=dark"></a>
-	<a href="https://gitee.com/y_project/RuoYi-Vue"><img src="https://img.shields.io/badge/RuoYi-v3.9.2-brightgreen.svg"></a>
-	<a href="https://gitee.com/y_project/RuoYi-Vue/blob/master/LICENSE"><img src="https://img.shields.io/github/license/mashape/apistatus.svg"></a>
+	<a href="https://gitee.com/y_project/PanJia-Vue/stargazers"><img src="https://gitee.com/y_project/PanJia-Vue/badge/star.svg?theme=dark"></a>
+	<a href="https://gitee.com/y_project/PanJia-Vue"><img src="https://img.shields.io/badge/PanJia-v3.9.2-brightgreen.svg"></a>
+	<a href="https://gitee.com/y_project/PanJia-Vue/blob/master/LICENSE"><img src="https://img.shields.io/github/license/mashape/apistatus.svg"></a>
 </p>
 
 ## 平台简介
@@ -18,21 +18,21 @@
 * 基于Jwt的Token认证，支持多终端（Web、App、小程序）无缝接入。
 * 支持加载动态权限菜单，多方式轻松权限控制，细粒度到按钮级别。
 * 内置强大代码生成器，一键生成前后端代码（java、vue、xml、sql），支持 CRUD 下载。
-* 阿里云折扣场：[点我进入](http://aly.ruoyi.vip)，腾讯云秒杀场：[点我进入](http://txy.ruoyi.vip)&nbsp;&nbsp;
+* 阿里云折扣场：[点我进入](http://aly.panjia.vip)，腾讯云秒杀场：[点我进入](http://txy.panjia.vip)&nbsp;&nbsp;
 
 # 版本分支
 
-RuoYi-Vue 后端项目提供 Spring Boot 2.x / 3.x / 4.x 多版本分支的并行维护
+PanJia-Vue 后端项目提供 Spring Boot 2.x / 3.x / 4.x 多版本分支的并行维护
 
 | 名称              | 说明                      | 地址                                                    |
 | :---------------- | :------------------------ | :------------------------------------------------------ |
-| master 默认分支   | Spring Boot 4.x (JDK 17+) | https://gitee.com/y_project/RuoYi-Vue                   |
-| springboot3 分支  | Spring Boot 3.x (JDK 17+) | https://gitee.com/y_project/RuoYi-Vue/tree/springboot3  |
-| springboot2 分支  | Spring Boot 2.x (JDK 8+)  | https://gitee.com/y_project/RuoYi-Vue/tree/springboot2  |  
+| master 默认分支   | Spring Boot 4.x (JDK 17+) | https://gitee.com/y_project/PanJia-Vue                   |
+| springboot3 分支  | Spring Boot 3.x (JDK 17+) | https://gitee.com/y_project/PanJia-Vue/tree/springboot3  |
+| springboot2 分支  | Spring Boot 2.x (JDK 8+)  | https://gitee.com/y_project/PanJia-Vue/tree/springboot2  |  
 
-RuoYi-Vue 前端项目提供 Vue 2.x / 3.x / JavaScript / TypeScript 版本，均可混用搭配
+PanJia-Vue 前端项目提供 Vue 2.x / 3.x / JavaScript / TypeScript 版本，均可混用搭配
 
-| 项目名称      | **RuoYi-Vue2** | **RuoYi-Vue3** | **RuoYi-Vue3-TypeScript**   |
+| 项目名称      | **PanJia-Vue2** | **PanJia-Vue3** | **PanJia-Vue3-TypeScript**   |
 | :---          | :---           | :---           | :---                        |
 | **前端框架**  | Vue 2         | Vue 3          | Vue 3                       |
 | **脚本语言**  | JavaScript    | JavaScript     | TypeScript                  |
@@ -41,7 +41,7 @@ RuoYi-Vue 前端项目提供 Vue 2.x / 3.x / JavaScript / TypeScript 版本，�
 | **状态管理**  | Vuex          | Pinia          | Pinia                       |
 | **路由管理**  | Vue Router 3  | Vue Router 4   | Vue Router 4                |
 | **核心特点**  | 1. 技术栈经典稳定<br>2. 社区资料丰富<br>3. 当前维护重心已转移 | 1. 现代前端技术栈<br>2. 开发体验与性能更优<br>3. 官方主推的活跃版本 | 1. 类型加持，减少沟通成本<br>2. 开发时有提示，效率更高<br>3. 多人协作企业级开发项目 |
-| **仓库地址**  | [RuoYi-Vue2](https://gitcode.com/yangzongzhuan/RuoYi-Vue2) | [RuoYi-Vue3](https://gitcode.com/yangzongzhuan/RuoYi-Vue3) | [RuoYi-Vue3-TypeScript](https://gitcode.com/yangzongzhuan/RuoYi-Vue3/tree/typescript) |
+| **仓库地址**  | [PanJia-Vue2](https://gitcode.com/yangzongzhuan/PanJia-Vue2) | [PanJia-Vue3](https://gitcode.com/yangzongzhuan/PanJia-Vue3) | [PanJia-Vue3-TypeScript](https://gitcode.com/yangzongzhuan/PanJia-Vue3/tree/typescript) |
 
 ## 内置功能
 
@@ -69,8 +69,8 @@ RuoYi-Vue 前端项目提供 Vue 2.x / 3.x / JavaScript / TypeScript 版本，�
 - admin/admin123  
 - 陆陆续续收到一些打赏，为了更好的体验已用于演示服务器升级。谢谢各位小伙伴。
 
-演示地址：http://vue.ruoyi.vip  
-文档地址：http://doc.ruoyi.vip
+演示地址：http://vue.panjia.vip  
+文档地址：http://doc.panjia.vip
 
 ## 演示图
 
