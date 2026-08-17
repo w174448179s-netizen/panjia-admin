@@ -40,9 +40,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <select id="selectDbTableColumnsByName" parameterType="String" resultMap="GenTableColumnResult">
-		select column_name, (case when (is_nullable = 'no' <![CDATA[ && ]]> column_key != 'PRI') then '1' else '0' end) as is_required, (case when column_key = 'PRI' then '1' else '0' end) as is_pk, ordinal_position as sort, column_comment, (case when extra = 'auto_increment' then '1' else '0' end) as is_increment, column_type
-		from information_schema.columns where table_schema = (select database()) and table_name = (#{tableName})
-		order by ordinal_position
+		select a.attname as column_name,
+			(case when a.attnotnull and (p.contype is null or p.contype &lt;&gt; 'p') then '1' else '0' end) as is_required,
+			(case when p.contype = 'p' then '1' else '0' end) as is_pk,
+			a.attnum as sort,
+			col_description(a.attrelid, a.attnum) as column_comment,
+			(case when pg_get_serial_sequence(quote_ident(n.nspname) || '.' || c.relname, a.attname) is not null then '1' else '0' end) as is_increment,
+			format_type(a.atttypid, a.atttypmod) as column_type
+		from pg_attribute a
+			 join pg_class c on a.attrelid = c.oid
+			 join pg_namespace n on c.relnamespace = n.oid
+			 left join pg_constraint p on p.conrelid = c.oid and p.contype = 'p' and a.attnum = any(p.conkey)
+		where n.nspname = current_schema() and c.relname = #{tableName} and a.attnum &gt; 0 and not a.attisdropped
+		order by a.attnum
 	</select>
 
     <insert id="insertGenTableColumn" parameterType="GenTableColumn" useGeneratedKeys="true" keyProperty="columnId">

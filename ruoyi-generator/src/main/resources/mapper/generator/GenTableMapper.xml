@@ -78,15 +78,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="selectDbTableList" parameterType="GenTable" resultMap="GenTableResult">
-		select table_name, table_comment, create_time, update_time from information_schema.tables
-		where table_schema = (select database())
-		AND table_name NOT LIKE 'qrtz\_%' AND table_name NOT LIKE 'gen\_%'
+		select table_name, table_comment, create_time, update_time from (
+			select c.relname as table_name, obj_description(c.oid, 'pg_class') as table_comment, null::timestamp as create_time, null::timestamp as update_time
+			from pg_class c
+				 join pg_namespace n on n.oid = c.relnamespace
+			where n.nspname = current_schema() and c.relkind = 'r'
+		) dbt
+		where table_name NOT LIKE 'qrtz\_%' AND table_name NOT LIKE 'gen\_%'
 		AND table_name NOT IN (select table_name from gen_table)
 		<if test="tableName != null and tableName != ''">
 			AND lower(table_name) like lower('%' || #{tableName} || '%')
 		</if>
 		<if test="tableComment != null and tableComment != ''">
-			AND lower(table_comment) like lower('%' || #{tableComment} || '%')
+			AND lower(coalesce(table_comment, '')) like lower('%' || #{tableComment} || '%')
 		</if>
 		<if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
 			AND to_char(create_time, 'YYYYMMDD') &gt;= to_char(#{params.beginTime}::timestamp, 'YYYYMMDD')
@@ -94,21 +98,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
 			AND to_char(create_time, 'YYYYMMDD') &lt;= to_char(#{params.endTime}::timestamp, 'YYYYMMDD')
 		</if>
-        order by create_time desc
+        order by table_name desc
 	</select>
-	
+
 	<select id="selectDbTableListByNames" resultMap="GenTableResult">
-		select table_name, table_comment, create_time, update_time from information_schema.tables
-		where table_name NOT LIKE 'qrtz\_%' and table_name NOT LIKE 'gen\_%' and table_schema = (select database())
+		select table_name, table_comment, create_time, update_time from (
+			select c.relname as table_name, obj_description(c.oid, 'pg_class') as table_comment, null::timestamp as create_time, null::timestamp as update_time
+			from pg_class c
+				 join pg_namespace n on n.oid = c.relnamespace
+			where n.nspname = current_schema() and c.relkind = 'r'
+		) dbt
+		where table_name NOT LIKE 'qrtz\_%' and table_name NOT LIKE 'gen\_%'
 		and table_name in
 	    <foreach collection="array" item="name" open="(" separator="," close=")">
  			#{name}
-        </foreach> 
+        </foreach>
 	</select>
-	
+
 	<select id="selectTableByName" parameterType="String" resultMap="GenTableResult">
-		select table_name, table_comment, create_time, update_time from information_schema.tables
-		where table_comment <![CDATA[ <> ]]> '' and table_schema = (select database())
+		select table_name, table_comment, create_time, update_time from (
+			select c.relname as table_name, obj_description(c.oid, 'pg_class') as table_comment, null::timestamp as create_time, null::timestamp as update_time
+			from pg_class c
+				 join pg_namespace n on n.oid = c.relnamespace
+			where n.nspname = current_schema() and c.relkind = 'r'
+		) dbt
+		where coalesce(table_comment, '') <![CDATA[ <> ]]> ''
 		and table_name = #{tableName}
 	</select>
 	
