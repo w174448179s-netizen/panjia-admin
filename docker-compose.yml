@@ -1,0 +1,39 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: panjia-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: panjia
+      POSTGRES_USER: panjia
+      POSTGRES_PASSWORD: panjia_dev
+    ports:
+      - "5432:5432"
+    volumes:
+      - panjia-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U panjia -d panjia"]  # 检测数据库是否可连接
+      interval: 10s      # 每 10 秒检查一次
+      timeout: 5s        # 单次检查超时时间
+      retries: 5         # 连续失败 5 次标记为 unhealthy
+      start_period: 30s  # 容器启动后等待 30 秒再开始检查（给数据库初始化留足时间）
+
+  redis:
+    image: redis:7.2-alpine
+    container_name: panjia-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - panjia-redis-data:/data
+    command: redis-server --requirepass panjia_redis_dev
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "panjia_redis_dev", "ping"]  # 带密码执行 PING
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+volumes:
+  panjia-postgres-data:
+  panjia-redis-data:

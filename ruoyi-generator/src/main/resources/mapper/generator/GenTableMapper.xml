@@ -63,16 +63,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<include refid="selectGenTableVo"/>
 		<where>
 			<if test="tableName != null and tableName != ''">
-				AND lower(table_name) like lower(concat('%', #{tableName}, '%'))
+				AND lower(table_name) like lower('%' || #{tableName} || '%')
 			</if>
 			<if test="tableComment != null and tableComment != ''">
-				AND lower(table_comment) like lower(concat('%', #{tableComment}, '%'))
+				AND lower(table_comment) like lower('%' || #{tableComment} || '%')
 			</if>
 			<if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
-				AND date_format(create_time,'%Y%m%d') &gt;= date_format(#{params.beginTime},'%Y%m%d')
+				AND to_char(create_time, 'YYYYMMDD') &gt;= to_char(#{params.beginTime}::timestamp, 'YYYYMMDD')
 			</if>
 			<if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
-				AND date_format(create_time,'%Y%m%d') &lt;= date_format(#{params.endTime},'%Y%m%d')
+				AND to_char(create_time, 'YYYYMMDD') &lt;= to_char(#{params.endTime}::timestamp, 'YYYYMMDD')
 			</if>
 		</where>
 	</select>
@@ -83,16 +83,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND table_name NOT LIKE 'qrtz\_%' AND table_name NOT LIKE 'gen\_%'
 		AND table_name NOT IN (select table_name from gen_table)
 		<if test="tableName != null and tableName != ''">
-			AND lower(table_name) like lower(concat('%', #{tableName}, '%'))
+			AND lower(table_name) like lower('%' || #{tableName} || '%')
 		</if>
 		<if test="tableComment != null and tableComment != ''">
-			AND lower(table_comment) like lower(concat('%', #{tableComment}, '%'))
+			AND lower(table_comment) like lower('%' || #{tableComment} || '%')
 		</if>
 		<if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
-			AND date_format(create_time,'%Y%m%d') &gt;= date_format(#{params.beginTime},'%Y%m%d')
+			AND to_char(create_time, 'YYYYMMDD') &gt;= to_char(#{params.beginTime}::timestamp, 'YYYYMMDD')
 		</if>
 		<if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
-			AND date_format(create_time,'%Y%m%d') &lt;= date_format(#{params.endTime},'%Y%m%d')
+			AND to_char(create_time, 'YYYYMMDD') &lt;= to_char(#{params.endTime}::timestamp, 'YYYYMMDD')
 		</if>
         order by create_time desc
 	</select>
@@ -170,7 +170,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="genPath != null and genPath != ''">#{genPath},</if>
 			<if test="remark != null and remark != ''">#{remark},</if>
  			<if test="createBy != null and createBy != ''">#{createBy},</if>
-			sysdate()
+			CURRENT_TIMESTAMP
          )
     </insert>
     
@@ -199,7 +199,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="options != null and options != ''">options = #{options},</if>
             <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
             <if test="remark != null">remark = #{remark},</if>
-            update_time = sysdate()
+            update_time = CURRENT_TIMESTAMP
         </set>
         where table_id = #{tableId}
     </update>
